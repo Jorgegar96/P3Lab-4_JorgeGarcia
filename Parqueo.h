@@ -30,6 +30,7 @@ class Parqueo{
 		void setCarros(Carro****);
 		void crearCasillas();
 		void agregarCarro(Carro*, int);
+		void listarParqueo(int);
 		~Parqueo();
 };
 

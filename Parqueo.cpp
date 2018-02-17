@@ -19,6 +19,7 @@ Parqueo::Parqueo(int no_pisos, int capacidad_m, int capacidad_n, double altura){
 }
 
 void Parqueo::crearCasillas(){
+	//cout<<"crendo pa"<<altura<<" "<<capacidad_m<<" "<<capacidad_n<<endl;
 	casillas = new Carro***[no_pisos];
 	for (int i=0; i < no_pisos; i++){
 		casillas[i] = new Carro**[capacidad_n];
@@ -29,6 +30,14 @@ void Parqueo::crearCasillas(){
 			}
 		}
 	}
+}
+
+double Parqueo:: getAltura(){
+	return altura;
+}
+
+void Parqueo:: setAltura(double altura){
+	this->altura = altura;
 }
 
 int Parqueo:: getNo_pisos(){
@@ -65,15 +74,37 @@ void Parqueo:: setCarros(Carro**** casillas){
 
 void Parqueo:: agregarCarro(Carro* carro, int piso){
 	bool agregado = false;
+	cout<<"as";
 	for (int x=0; x < capacidad_n; x++){
 		for (int y=0; y < capacidad_m; y++){
-			if (!agregado && casillas[piso][capacidad_n][capacidad_m]==NULL){
-				casillas[piso][capacidad_n][capacidad_m] = carro;
+			if (casillas[piso][capacidad_n][capacidad_m]==NULL){
+			//	casillas[piso][capacidad_n][capacidad_m] = carro;
 				cout<<"Parqueado"<<endl;
 				agregado = true;
+				break;
+			}
+		}
+		if (agregado){
+			break;
+		}
+	}
+	
+}
+
+void Parqueo:: listarParqueo(int piso){
+	int cont_disp = 0;
+	int cont_ocup = 0;
+
+	for (int i=0; i<capacidad_n;i++){
+		for (int j=0; j< capacidad_m; j++){
+			if (casillas[piso][capacidad_n][capacidad_m]==NULL){
+				cont_ocup++;
+			}else{
+				cont_disp++;
 			}
 		}
 	}
+	cout<<"Hay "<<cont_ocup<< " opcupados y " << cont_disp << " disponibles en el piso"<<endl;
 }
 
 Parqueo:: ~Parqueo(){
@@ -85,6 +116,7 @@ Parqueo:: ~Parqueo(){
 			}
 			delete[] casillas[j][j];
 		}
-		delete casillas[i];
-	}	
+		delete[] casillas[i];
+	}
+	cout<<"123";	
 }
